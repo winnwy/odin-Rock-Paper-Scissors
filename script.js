@@ -34,8 +34,13 @@ function playRound(playerSelection, computerSelection) {
         default:
             break;
     }
-    let outputCS = cs[0].toUpperCase() + cs.slice(1)
-    let outputPS = ps[0].toUpperCase() + ps.slice(1)
+    console.log(printHelper(ps, cs, result));
+    return result;  
+}
+
+function printHelper(ps, cs, result) {
+    let outputCS = cs[0].toUpperCase() + cs.slice(1);
+    let outputPS = ps[0].toUpperCase() + ps.slice(1);
     if (result === "Tie")
         return result;
     else if (result === "Lose")
@@ -44,6 +49,29 @@ function playRound(playerSelection, computerSelection) {
         return `You Win! ${outputPS} beats ${outputCS}`
 }
 
-const playerSelection = "rock";
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection));
+function game(playerSelection, computerSelection) {
+    let score = 0;
+    let winner = "You Win";
+    for (let i = 0; i < 5; i++) {
+        let playerSelection = prompt("Input rock, paper or scissors: ", "rock");
+        let computerSelection = getComputerChoice();
+        result = playRound(playerSelection, computerSelection)
+        switch (result) {
+            case "Win": 
+                score += 1;
+                break;
+            case "Lose":
+                score -= 1;
+                break;
+        }
+        console.log(`Round ${i+1}: Score: ${score}`);
+    }
+    if (score < 0) {
+        winner = "Computer Wins";
+    }
+    else if (score === 0) {
+        winner = "Win Win";
+    }
+    console.log(winner);
+}
+game();
